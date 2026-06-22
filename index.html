@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0E0C09">
 <title>갑자TV 운영 개편 안내</title>
 <meta property="og:type" content="website">
 <meta property="og:title" content="갑자TV 운영 개편 안내">
@@ -31,8 +32,8 @@
     --tag-adjust: #CC8B3E;
     --tag-remove: #B5524A;
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;overflow-x:hidden;width:100%;}
   body{
     background:
       radial-gradient(ellipse at top, rgba(212,169,58,0.07), transparent 55%),
@@ -41,7 +42,10 @@
     font-family:'Noto Sans KR', sans-serif;
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
+    text-size-adjust:100%;
+    -webkit-text-size-adjust:100%;
   }
+  button, a{touch-action:manipulation;}
   .wrap{max-width:760px;margin:0 auto;padding:44px 20px 64px;}
 
   .page{display:none;}
@@ -111,11 +115,16 @@
   }
   .sub b{color:var(--gold);font-weight:700;}
 
-  /* ---------- CMD LINK BUTTON ---------- */
-  .cmd-link-wrap{display:flex;justify-content:center;margin:0 0 34px;}
-  .cmd-link-btn{
+  /* ---------- CTA BUTTONS (명령어 보기 / 영상가이드) ---------- */
+  .cmd-link-wrap{
+    display:flex;flex-wrap:wrap;
+    justify-content:center;
+    gap:14px;
+    margin:0 0 34px;
+  }
+  .cta-btn{
+    position:relative;
     display:inline-flex;align-items:center;gap:10px;
-    background:linear-gradient(180deg, rgba(212,169,58,0.16), rgba(212,169,58,0.06));
     border:1.6px solid var(--gold);
     color:var(--gold-bright);
     font-family:'Black Han Sans',sans-serif;
@@ -123,18 +132,64 @@
     padding:12px 22px;
     border-radius:12px;
     cursor:pointer;
-    box-shadow:0 0 0 0 rgba(212,169,58,0.0);
+    background:linear-gradient(180deg, rgba(212,169,58,0.16), rgba(212,169,58,0.06));
     transition:transform .15s ease, box-shadow .25s ease, background .25s ease;
+    animation:pulse-gold 2.4s ease-in-out infinite;
   }
-  .cmd-link-btn:hover{
-    transform:translateY(-1px);
-    box-shadow:0 4px 18px rgba(212,169,58,0.22);
-    background:linear-gradient(180deg, rgba(212,169,58,0.24), rgba(212,169,58,0.08));
+  .cta-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 20px rgba(212,169,58,0.28);
+    background:linear-gradient(180deg, rgba(212,169,58,0.26), rgba(212,169,58,0.09));
   }
-  .cmd-link-btn svg{width:18px;height:18px;}
-  .cmd-link-btn .chev{transition:transform .2s ease;}
-  .cmd-link-btn:hover .chev{transform:translateX(3px);}
+  .cta-btn svg{width:18px;height:18px;flex-shrink:0;}
+  .cta-btn .chev{transition:transform .2s ease;}
+  .cta-btn:hover .chev{transform:translateX(3px);}
+  .cta-btn .poke{
+    position:absolute;top:-13px;right:-8px;
+    font-size:18px;
+    animation:poke-bounce 1.6s ease-in-out infinite;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  }
+  @keyframes pulse-gold{
+    0%,100%{box-shadow:0 0 0 0 rgba(242,201,76,0);}
+    50%{box-shadow:0 0 0 5px rgba(242,201,76,0.16), 0 0 18px 2px rgba(242,201,76,0.25);}
+  }
+  @keyframes pulse-red{
+    0%,100%{box-shadow:0 0 0 0 rgba(229,72,57,0);}
+    50%{box-shadow:0 0 0 5px rgba(229,72,57,0.18), 0 0 18px 2px rgba(229,72,57,0.3);}
+  }
+  @keyframes poke-bounce{
+    0%,100%{transform:translateY(0) rotate(-4deg);}
+    50%{transform:translateY(-5px) rotate(4deg);}
+  }
 
+  .cta-btn.cta-red{
+    border-color:#E54839;
+    color:#FF8A7A;
+    background:linear-gradient(180deg, rgba(229,72,57,0.16), rgba(229,72,57,0.06));
+    animation:pulse-red 2.4s ease-in-out infinite;
+  }
+  .cta-btn.cta-red:hover{
+    box-shadow:0 6px 20px rgba(229,72,57,0.3);
+    background:linear-gradient(180deg, rgba(229,72,57,0.26), rgba(229,72,57,0.09));
+  }
+
+  @keyframes pulse-green{
+    0%,100%{box-shadow:0 0 0 0 rgba(79,174,125,0);}
+    50%{box-shadow:0 0 0 5px rgba(79,174,125,0.18), 0 0 18px 2px rgba(79,174,125,0.3);}
+  }
+  .cta-btn.cta-green{
+    border-color:#4FAE7D;
+    color:#8FE3B4;
+    background:linear-gradient(180deg, rgba(79,174,125,0.16), rgba(79,174,125,0.06));
+    animation:pulse-green 2.4s ease-in-out infinite;
+  }
+  .cta-btn.cta-green:hover{
+    box-shadow:0 6px 20px rgba(79,174,125,0.3);
+    background:linear-gradient(180deg, rgba(79,174,125,0.26), rgba(79,174,125,0.09));
+  }
+
+  /* ---------- 돌아가기 / 상단으로 가기 ---------- */
   .back-btn{
     display:inline-flex;align-items:center;gap:8px;
     background:transparent;
@@ -146,11 +201,19 @@
     padding:9px 16px;
     border-radius:10px;
     cursor:pointer;
-    margin-bottom:26px;
     transition:border-color .2s ease, color .2s ease;
   }
   .back-btn:hover{border-color:var(--gold);color:var(--gold-bright);}
   .back-btn svg{width:15px;height:15px;}
+  .back-btn.top{margin-bottom:26px;}
+  .bottom-nav{
+    display:flex;justify-content:center;
+    margin-top:34px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .cta-btn, .cta-btn .poke{animation:none!important;}
+  }
 
   /* ---------- TIMELINE / PATCH LIST ---------- */
   .timeline{position:relative;margin-top:36px;}
@@ -307,6 +370,72 @@
   .cmd-group{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);}
   .cmd-group:first-of-type{margin-top:4px;padding-top:0;border-top:none;}
 
+  /* ---------- video guide page specific ---------- */
+  .vid-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:18px;
+    margin-top:30px;
+  }
+  .vid-card{
+    position:relative;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .vid-card:hover{
+    transform:translateY(-3px);
+    border-color:var(--gold);
+    box-shadow:0 10px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,169,58,0.25);
+  }
+  .vid-num{
+    position:absolute;top:9px;left:9px;z-index:2;
+    font-family:'Black Han Sans',sans-serif;
+    font-size:11px;color:var(--gold-bright);
+    background:rgba(14,12,9,0.75);
+    border:1px solid rgba(242,201,76,0.4);
+    padding:2px 8px;border-radius:6px;
+  }
+  .vid-title{
+    padding:13px 14px 10px;
+    font-weight:700;font-size:13.8px;
+    color:var(--text);
+    line-height:1.45;
+  }
+  .vid-thumb-link{display:block;position:relative;}
+  .vid-thumb-wrap{
+    position:relative;
+    aspect-ratio:16/9;
+    background:#000;
+    overflow:hidden;
+  }
+  .vid-thumb-wrap img{
+    width:100%;height:100%;
+    object-fit:cover;display:block;
+    transition:transform .3s ease;
+  }
+  .vid-card:hover .vid-thumb-wrap img{transform:scale(1.05);}
+  .play-badge{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.55) 100%);
+  }
+  .play-circle{
+    width:50px;height:50px;border-radius:50%;
+    background:rgba(20,16,10,0.55);
+    border:2px solid rgba(255,255,255,0.85);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .play-circle svg{width:18px;height:18px;fill:#fff;}
+  .vid-card:hover .play-circle{
+    transform:scale(1.14);
+    background:rgba(229,72,57,0.9);
+    border-color:#fff;
+  }
+
   /* ---------- FOOTER ---------- */
   footer{
     margin-top:40px;
@@ -323,6 +452,7 @@
   }
 
   @media (max-width:560px){
+    .wrap{padding:32px 16px 48px;}
     .title-photo-wrap{width:104px;height:104px;}
     .item{grid-template-columns:44px 1fr;column-gap:10px;}
     .badge{width:44px;height:44px;border-radius:11px;}
@@ -332,11 +462,352 @@
     .arrow{transform:rotate(90deg);justify-self:center;}
     .twocol{grid-template-columns:1fr;}
     h1{font-size:26px;}
+
+    .cmd-link-wrap{flex-direction:column;align-items:stretch;gap:12px;}
+    .cta-btn{width:100%;justify-content:center;font-size:14px;padding:13px 18px;}
+    .cta-btn .poke{right:10px;top:-11px;}
+
+    .vid-grid{grid-template-columns:1fr;gap:14px;}
+    .vid-title{font-size:13.5px;}
+
+    .back-btn{padding:11px 16px;font-size:13px;}
+  }
+
+  @media (max-width:380px){
+    .wrap{padding:26px 13px 40px;}
+    h1{font-size:23px;}
+    .sub{font-size:13.5px;}
+    .card{padding:15px 15px 17px;}
+    .card-title{font-size:15px;}
+    .cta-btn{font-size:13px;padding:12px 14px;gap:8px;}
+    .cta-btn svg{width:16px;height:16px;}
   }
 
   @media (prefers-reduced-motion: reduce){
     .item{opacity:1!important;transform:none!important;transition:none!important;}
     .page.active{animation:none!important;}
+  }
+</style>
+
+<!-- ===== 우선예약 위젯 전용 스타일 (페이지4 내부에만 적용되도록 범위 한정) ===== -->
+<style>
+  .priority-widget,
+  .priority-widget *,
+  .priority-widget *::before,
+  .priority-widget *::after {
+    margin:0; padding:0; -webkit-tap-highlight-color:transparent; box-sizing:border-box;
+  }
+
+  .priority-widget {
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    border-radius:22px;
+    padding:26px 14px 30px;
+    background: radial-gradient(ellipse at top, #1a1200 0%, #0d0d0d 60%);
+    color:#fff;
+    font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+  }
+
+  /* 황금 파티클 배경 (위젯 내부에만 한정) */
+  .priority-widget .bg-particles {
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    overflow:hidden;
+  }
+  .priority-widget .particle {
+    position:absolute;
+    border-radius:50%;
+    background:#ffcc00;
+    opacity:0;
+    animation: pw-float-up linear infinite;
+  }
+  @keyframes pw-float-up {
+    0% { transform: translateY(100%) scale(0); opacity:0; }
+    10% { opacity:0.4; }
+    90% { opacity:0.15; }
+    100% { transform: translateY(-110%) scale(1); opacity:0; }
+  }
+
+  .priority-widget .priority-card {
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:380px;
+    margin:0 auto;
+    background: rgba(255,255,255,0.04);
+    border:2.5px solid #ffcc00;
+    border-radius:24px;
+    padding:28px 22px 26px;
+    box-shadow:
+      0 0 30px rgba(255,204,0,0.18),
+      0 0 80px rgba(255,204,0,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+  }
+
+  .priority-widget .char-wrap { text-align:center; margin-bottom:10px; }
+  .priority-widget .char-img {
+    width:110px; height:110px;
+    object-fit:contain;
+    border-radius:50%;
+    border:3px solid #ffcc00;
+    box-shadow: 0 0 18px rgba(255,204,0,0.45);
+    cursor:pointer;
+    transition: filter .22s ease, box-shadow .22s ease, transform .15s ease;
+    filter:brightness(1);
+  }
+  .priority-widget .char-img:hover,
+  .priority-widget .char-img:active,
+  .priority-widget .char-img.touched {
+    filter: brightness(1.45) drop-shadow(0 0 12px rgba(255,204,0,0.9));
+    box-shadow: 0 0 35px rgba(255,204,0,0.75);
+    transform: scale(1.06);
+  }
+
+  .priority-widget h1.main-title {
+    text-align:center;
+    color:#ffcc00;
+    font-size:1.45rem;
+    font-weight:900;
+    letter-spacing:-0.5px;
+    margin-bottom:18px;
+    line-height:1.3;
+    text-shadow: 0 0 12px rgba(255,204,0,0.35);
+  }
+  .priority-widget h1.main-title sup { font-size:0.65em; vertical-align:super; }
+
+  .priority-widget .donate-group { display:flex; gap:10px; margin-bottom:18px; }
+  .priority-widget .donate-btn {
+    flex:1;
+    padding:13px 6px;
+    border:none;
+    border-radius:10px;
+    font-size:0.85rem;
+    font-weight:700;
+    letter-spacing:-0.3px;
+    color:#fff;
+    cursor:pointer;
+    white-space:nowrap;
+    transition: transform .1s, filter .15s;
+    line-height:1.3;
+  }
+  .priority-widget .donate-btn:active { transform:scale(0.95); }
+
+  .priority-widget .btn-toon {
+    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+    box-shadow: 0 4px 14px rgba(124,58,237,0.5);
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .priority-widget .btn-toon:hover { filter:brightness(1.12); }
+  .priority-widget .btn-toon img.toon-icon { width:18px; height:18px; object-fit:contain; flex-shrink:0; }
+
+  .priority-widget .btn-bank {
+    background: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
+    box-shadow: 0 4px 14px rgba(249,115,22,0.5);
+  }
+  .priority-widget .btn-bank:hover { filter:brightness(1.12); }
+
+  .priority-widget .btn-youtube {
+    width:100%;
+    padding:13px 10px;
+    border:none;
+    border-radius:10px;
+    font-size:0.85rem;
+    font-weight:700;
+    letter-spacing:-0.3px;
+    color:#fff;
+    cursor:pointer;
+    transition: transform .1s, filter .15s;
+    line-height:1.3;
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+    box-shadow: 0 4px 14px rgba(255,0,0,0.45);
+    display:flex; align-items:center; justify-content:center; gap:7px;
+    margin-bottom:18px;
+  }
+  .priority-widget .btn-youtube:active { transform:scale(0.97); }
+  .priority-widget .btn-youtube:hover { filter:brightness(1.12); }
+  .priority-widget .btn-youtube svg { flex-shrink:0; }
+
+  .priority-widget .input-group { display:flex; gap:9px; margin-bottom:16px; }
+  .priority-widget input[type="text"] {
+    flex:7; min-width:0;
+    padding:14px 12px;
+    background: rgba(255,255,255,0.07);
+    border:1.5px solid #444;
+    border-radius:10px;
+    color:#fff;
+    font-size:1rem;
+    text-align:center;
+    transition: border-color .2s;
+    outline:none;
+    -webkit-appearance:none;
+  }
+  .priority-widget input[type="text"]::placeholder { color:#666; }
+  .priority-widget input[type="text"]:focus { border-color:#ffcc00; background: rgba(255,204,0,0.05); }
+
+  .priority-widget select {
+    flex:3; min-width:0;
+    padding:14px 6px;
+    background: rgba(255,255,255,0.07);
+    border:1.5px solid #444;
+    border-radius:10px;
+    color:#ffcc00;
+    font-size:0.9rem;
+    font-weight:700;
+    text-align:center;
+    cursor:pointer;
+    outline:none;
+    -webkit-appearance:none; appearance:none;
+  }
+  .priority-widget select option { background:#222; color:#fff; }
+
+  .priority-widget .main-btn {
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+    color:#000;
+    font-size:1.15rem;
+    font-weight:900;
+    letter-spacing:0.5px;
+    cursor:pointer;
+    box-shadow: 0 5px 18px rgba(255,204,0,0.4);
+    transition: transform .1s, box-shadow .15s;
+    margin-bottom:6px;
+  }
+  .priority-widget .main-btn:active { transform:scale(0.98); box-shadow: 0 2px 8px rgba(255,204,0,0.3); }
+  .priority-widget .main-btn:disabled { background:#3a3a3a; color:#666; cursor:not-allowed; box-shadow:none; }
+
+  .priority-widget .cooldown-msg {
+    color:#ff5555;
+    font-size:0.78rem;
+    text-align:center;
+    margin-top:6px;
+    display:none;
+  }
+
+  .priority-widget .back-link {
+    text-align:center;
+    margin-top:16px;
+    font-size:0.82rem;
+    color:#777;
+    cursor:pointer;
+    text-decoration:underline;
+    transition: color .2s;
+  }
+  .priority-widget .back-link:hover { color:#ffcc00; }
+
+  .priority-widget #prioritySection,
+  .priority-widget #prioritySuccessSection { display:none; }
+
+  .priority-widget .success-wrap { text-align:center; padding:10px 0; }
+  .priority-widget .success-img {
+    width:150px; height:auto;
+    filter: drop-shadow(0 0 14px rgba(255,204,0,0.55));
+    margin-bottom:18px;
+    animation: pw-pop-in .4s ease;
+  }
+  @keyframes pw-pop-in { from{transform:scale(0.7); opacity:0;} to{transform:scale(1); opacity:1;} }
+  .priority-widget .success-title { font-size:1.6rem; font-weight:900; color:#fff; margin-bottom:8px; }
+  .priority-widget .success-sub { color:#ffcc00; font-weight:700; font-size:1.05rem; margin-bottom:10px; }
+  .priority-widget .success-msg { color:#ccc; line-height:1.65; font-size:0.92rem; margin-bottom:22px; }
+  .priority-widget .reload-btn {
+    background:#2a2a2a; color:#bbb;
+    border:1px solid #444; border-radius:10px;
+    padding:11px 28px; font-size:0.9rem;
+    cursor:pointer; transition: background .2s;
+  }
+  .priority-widget .reload-btn:hover { background:#333; color:#ffcc00; }
+
+  /* 모달 (위젯 내부 트리거로 열리지만, 화면 전체 기준 표시) */
+  .priority-widget .modal-overlay {
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.72);
+    display:none; align-items:center; justify-content:center;
+    z-index:200; padding:20px;
+  }
+  .priority-widget .modal-overlay.open { display:flex; }
+  .priority-widget .modal-box {
+    background:#1a1a1a;
+    border:2px solid #ffcc00;
+    border-radius:18px;
+    padding:28px 22px 22px;
+    width:100%; max-width:310px;
+    text-align:center;
+    box-shadow: 0 0 30px rgba(255,204,0,0.3);
+    animation: pw-slide-up .25s ease;
+  }
+  @keyframes pw-slide-up { from{transform:translateY(30px); opacity:0;} to{transform:translateY(0); opacity:1;} }
+  .priority-widget .modal-icon { font-size:2.4rem; margin-bottom:10px; }
+  .priority-widget .modal-title { color:#ffcc00; font-size:1.05rem; font-weight:900; margin-bottom:12px; }
+  .priority-widget .modal-account {
+    background: rgba(255,204,0,0.08);
+    border:1px solid rgba(255,204,0,0.3);
+    border-radius:10px; padding:12px;
+    color:#fff; font-size:0.95rem; font-weight:700;
+    letter-spacing:0.5px; margin-bottom:8px; word-break:break-all;
+  }
+  .priority-widget .modal-copy-tag {
+    display:inline-block; background:#ffcc00; color:#000;
+    font-size:0.72rem; font-weight:900;
+    padding:3px 10px; border-radius:20px; margin-bottom:14px;
+  }
+  .priority-widget .modal-msg { color:#bbb; font-size:0.85rem; line-height:1.55; margin-bottom:20px; }
+  .priority-widget .modal-close-btn {
+    width:100%; padding:13px;
+    background:#ffcc00; color:#000;
+    border:none; border-radius:10px;
+    font-size:1rem; font-weight:900;
+    cursor:pointer; transition: filter .15s;
+  }
+  .priority-widget .modal-close-btn:hover { filter:brightness(1.1); }
+
+  .priority-widget .confirm-modal-overlay {
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.72);
+    display:none; align-items:center; justify-content:center;
+    z-index:200; padding:20px;
+  }
+  .priority-widget .confirm-modal-overlay.open { display:flex; }
+  .priority-widget .confirm-box {
+    background:#1a1a1a;
+    border:2px solid #ffcc00;
+    border-radius:18px;
+    padding:26px 22px 20px;
+    width:100%; max-width:300px;
+    text-align:center;
+    box-shadow: 0 0 30px rgba(255,204,0,0.3);
+    animation: pw-slide-up .25s ease;
+  }
+  .priority-widget .confirm-box p { color:#fff; font-size:1rem; font-weight:700; margin-bottom:20px; line-height:1.6; }
+  .priority-widget .confirm-box p span { color:#ffcc00; }
+  .priority-widget .confirm-btn-group { display:flex; gap:10px; }
+  .priority-widget .btn-cancel {
+    flex:1; padding:12px; background:#333; color:#bbb;
+    border:1px solid #444; border-radius:10px;
+    font-size:0.95rem; font-weight:700; cursor:pointer;
+  }
+  .priority-widget .btn-confirm {
+    flex:1; padding:12px; background:#ffcc00; color:#000;
+    border:none; border-radius:10px;
+    font-size:0.95rem; font-weight:900; cursor:pointer;
+  }
+
+  @media (max-width:360px){
+    .priority-widget{padding:20px 10px 24px;}
+    .priority-widget .priority-card{padding:22px 16px 20px;}
+    .priority-widget .char-img{width:92px;height:92px;}
+    .priority-widget h1.main-title{font-size:1.25rem;}
+    .priority-widget .donate-group{flex-direction:column;}
+    .priority-widget .donate-btn{font-size:0.82rem;padding:12px 8px;}
+    .priority-widget .input-group{flex-direction:column;}
+    .priority-widget input[type="text"], .priority-widget select{flex:none;width:100%;}
   }
 </style>
 </head>
@@ -358,9 +829,22 @@
   </header>
 
   <div class="cmd-link-wrap">
-    <button class="cmd-link-btn" id="toCmdPage" type="button">
+    <button class="cta-btn go-page" data-target="page2" type="button">
+      <span class="poke">👆</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
       갑자TV 명령어 보기
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <button class="cta-btn cta-red go-page" data-target="page3" type="button">
+      <span class="poke">🎬</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>
+      운빨 성장가이드 영상
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <button class="cta-btn cta-green go-page" data-target="page4" type="button">
+      <span class="poke">📅</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3v4M16 3v4"/></svg>
+      갑자TV 우선예약
       <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
     </button>
   </div>
@@ -526,6 +1010,13 @@
 
   </div>
 
+  <div class="bottom-nav">
+    <button class="back-btn scroll-top" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>
+      상단으로 가기
+    </button>
+  </div>
+
   <footer>
     <p class="ribbon">갑자TV 운영팀</p>
     <p>공지 기준일 · 2026.06.21</p>
@@ -537,7 +1028,7 @@
 <!-- ================= PAGE 2 : 지원 명령어 목록 ================= -->
 <div class="wrap page" id="page2">
 
-  <button class="back-btn" id="backBtn" type="button">
+  <button class="back-btn top go-page" data-target="page1" type="button">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
     돌아가기
   </button>
@@ -753,9 +1244,296 @@
 
   </div>
 
+  <div class="bottom-nav">
+    <button class="back-btn go-page" data-target="page1" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      돌아가기
+    </button>
+  </div>
+
   <footer>
     <p class="ribbon">갑자TV 운영팀</p>
     <p>명령어 목록 · v24.0 기준</p>
+  </footer>
+
+</div>
+
+<!-- ================= PAGE 3 : 운빨 성장가이드 영상 ================= -->
+<div class="wrap page" id="page3">
+
+  <button class="back-btn top go-page" data-target="page1" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+    돌아가기
+  </button>
+
+  <header>
+    <div class="beta-stamp">PLAYLIST · 추천 영상</div>
+    <h1>운빨 <span>성장가이드</span> 영상</h1>
+    <p class="sub">갑자가 추천하는 성장·공략 영상 모음이에요.<br>
+    썸네일을 누르면 <b>유튜브</b>로 바로 이동해요.</p>
+  </header>
+
+  <div class="vid-grid">
+
+    <div class="vid-card">
+      <div class="vid-title">가우스tv 2.0.2 버전 성장순서 성장루트 2가지 최신메타</div>
+      <a class="vid-thumb-link" href="https://youtu.be/ZruTNMR5g7Y" target="_blank" rel="noopener noreferrer">
+        <span class="vid-num">01</span>
+        <div class="vid-thumb-wrap">
+          <img src="https://img.youtube.com/vi/ZruTNMR5g7Y/hqdefault.jpg" alt="가우스tv 2.0.2 버전 성장순서 성장루트 2가지 최신메타 썸네일" loading="lazy">
+          <div class="play-badge"><div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="vid-card">
+      <div class="vid-title">파워나갔다 6월 물딜, 마딜 종합 티어표</div>
+      <a class="vid-thumb-link" href="https://youtu.be/WaOvWAKBskc" target="_blank" rel="noopener noreferrer">
+        <span class="vid-num">02</span>
+        <div class="vid-thumb-wrap">
+          <img src="https://img.youtube.com/vi/WaOvWAKBskc/hqdefault.jpg" alt="파워나갔다 6월 물딜, 마딜 종합 티어표 썸네일" loading="lazy">
+          <div class="play-badge"><div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="vid-card">
+      <div class="vid-title">ROX록스 최신 성장 가이드</div>
+      <a class="vid-thumb-link" href="https://youtu.be/VtHCdltcGvM" target="_blank" rel="noopener noreferrer">
+        <span class="vid-num">03</span>
+        <div class="vid-thumb-wrap">
+          <img src="https://img.youtube.com/vi/VtHCdltcGvM/hqdefault.jpg" alt="ROX록스 최신 성장 가이드 썸네일" loading="lazy">
+          <div class="play-badge"><div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="vid-card">
+      <div class="vid-title">김바탕 초보자 가이드 무과금으로 얻을 수 있는 다이야</div>
+      <a class="vid-thumb-link" href="https://youtu.be/ytC-1n2lF5c" target="_blank" rel="noopener noreferrer">
+        <span class="vid-num">04</span>
+        <div class="vid-thumb-wrap">
+          <img src="https://img.youtube.com/vi/ytC-1n2lF5c/hqdefault.jpg" alt="김바탕 초보자 가이드 무과금으로 얻을 수 있는 다이야 썸네일" loading="lazy">
+          <div class="play-badge"><div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="vid-card">
+      <div class="vid-title">가우스tv 1.7.7 버전 성장순서(금고 1~6)</div>
+      <a class="vid-thumb-link" href="https://youtu.be/YqpRe0MSC0A" target="_blank" rel="noopener noreferrer">
+        <span class="vid-num">05</span>
+        <div class="vid-thumb-wrap">
+          <img src="https://img.youtube.com/vi/YqpRe0MSC0A/hqdefault.jpg" alt="가우스tv 1.7.7 버전 성장순서(금고 1~6) 썸네일" loading="lazy">
+          <div class="play-badge"><div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="vid-card">
+      <div class="vid-title">서비니 금머행666 신모드 마딜 운영방법</div>
+      <a class="vid-thumb-link" href="https://youtu.be/zsx3yPGrf00" target="_blank" rel="noopener noreferrer">
+        <span class="vid-num">06</span>
+        <div class="vid-thumb-wrap">
+          <img src="https://img.youtube.com/vi/zsx3yPGrf00/hqdefault.jpg" alt="서비니 금머행666 신모드 마딜 운영방법 썸네일" loading="lazy">
+          <div class="play-badge"><div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="vid-card">
+      <div class="vid-title">나사사 신화석, 불멸석 최적 성장순서</div>
+      <a class="vid-thumb-link" href="https://youtu.be/UqOBp1Wk9h0" target="_blank" rel="noopener noreferrer">
+        <span class="vid-num">07</span>
+        <div class="vid-thumb-wrap">
+          <img src="https://img.youtube.com/vi/UqOBp1Wk9h0/hqdefault.jpg" alt="나사사 신화석, 불멸석 최적 성장순서 썸네일" loading="lazy">
+          <div class="play-badge"><div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="vid-card">
+      <div class="vid-title">가우스tv 펄스는 누구와 써야할까?</div>
+      <a class="vid-thumb-link" href="https://youtu.be/eNRcCOkztBU" target="_blank" rel="noopener noreferrer">
+        <span class="vid-num">08</span>
+        <div class="vid-thumb-wrap">
+          <img src="https://img.youtube.com/vi/eNRcCOkztBU/hqdefault.jpg" alt="가우스tv 펄스는 누구와 써야할까? 썸네일" loading="lazy">
+          <div class="play-badge"><div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="vid-card">
+      <div class="vid-title">가우스tv 불멸 미야옹 궁극기 범위</div>
+      <a class="vid-thumb-link" href="https://youtu.be/0m0oeYzwZZA" target="_blank" rel="noopener noreferrer">
+        <span class="vid-num">09</span>
+        <div class="vid-thumb-wrap">
+          <img src="https://img.youtube.com/vi/0m0oeYzwZZA/hqdefault.jpg" alt="가우스tv 불멸 미야옹 궁극기 범위 썸네일" loading="lazy">
+          <div class="play-badge"><div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="bottom-nav">
+    <button class="back-btn go-page" data-target="page1" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      돌아가기
+    </button>
+  </div>
+
+  <footer>
+    <p class="ribbon">갑자TV 운영팀</p>
+    <p>추천 영상은 채널 운영진이 직접 선별했어요.</p>
+  </footer>
+
+</div>
+
+<!-- ================= PAGE 4 : 갑자TV 우선예약 ================= -->
+<div class="wrap page" id="page4">
+
+  <button class="back-btn top go-page" data-target="page1" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+    돌아가기
+  </button>
+
+  <!-- ===== 갑자TV 후원 및 우선예약 위젯 (인라인 삽입) ===== -->
+  <div class="priority-widget" id="priorityWidget">
+
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <div class="priority-card" id="mainContainer">
+
+      <!-- 우선예약 섹션 (메인) -->
+      <div id="prioritySection" style="display:block;">
+
+        <div class="char-wrap">
+          <img
+            id="charImg"
+            src="https://raw.githubusercontent.com/gapjatv/up/main/gapjamoney1.png"
+            class="char-img"
+            alt="갑자TV 캐릭터"
+            draggable="false"
+          >
+        </div>
+
+        <h1 class="main-title">갑자<sup>tv</sup> 후원 및 우선예약</h1>
+
+        <div class="donate-group">
+          <button class="donate-btn btn-toon" onclick="window.open('https://toon.at/donate/gapjatv', '_blank')">
+            <img class="toon-icon" src="https://toon.at/img/common/icon_toonation.png" alt="투네이션" onerror="this.style.display='none'">
+            투네이션 5,000원
+          </button>
+          <button class="donate-btn btn-bank" onclick="openBankModal()">
+            🏦 계좌후원 5,000원
+          </button>
+        </div>
+
+        <button class="btn-youtube" onclick="openYoutubeModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          유튜브 멤버십 가입하기
+        </button>
+
+        <div class="input-group">
+          <input type="text" id="priorityNickname" placeholder="게임 닉네임 입력" autocomplete="off" autocorrect="off" spellcheck="false">
+          <select id="priorityModeSelect" onchange="checkPriorityModeSelect()">
+            <option value="" disabled selected>선택</option>
+            <option value="태초">태초</option>
+            <option value="신">신</option>
+            <option value="지옥">지옥</option>
+            <option value="하드">하드</option>
+            <option value="일반">일반</option>
+          </select>
+        </div>
+
+        <button id="prioritySubmitBtn" class="main-btn" onclick="openConfirmModal()">
+          🚀 우선예약 신청
+        </button>
+        <div id="priorityCooldownMsg" class="cooldown-msg">도배 방지를 위해 1분 후 다시 신청 가능합니다.</div>
+
+      </div>
+
+      <!-- 우선예약 완료 섹션 -->
+      <div id="prioritySuccessSection">
+        <div class="success-wrap">
+          <img src="https://tistory1.daumcdn.net/tistory/4488967/skin/images/baeteumaen.png" class="success-img" alt="완료">
+          <div class="success-title">우선예약 완료!</div>
+          <div class="success-sub">우선예약이 완료 되었습니다.</div>
+          <div class="success-msg">
+            소중한 후원 정말 감사드립니다!<br>
+            방송 화면에서 바로 확인해 드릴게요! 💖
+          </div>
+          <button class="reload-btn" onclick="resetPriorityWidget()">처음으로</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 유튜브 멤버십 안내 모달 -->
+    <div class="modal-overlay" id="youtubeModal">
+      <div class="modal-box">
+        <div class="modal-icon">🎬</div>
+        <div class="modal-title" style="color:#ff4444;">유튜브 멤버십 안내</div>
+        <div style="background:rgba(255,68,68,0.08); border:1px solid rgba(255,68,68,0.3); border-radius:10px; padding:14px; margin-bottom:14px;">
+          <div style="color:#ff7777; font-size:0.78rem; font-weight:700; margin-bottom:10px; letter-spacing:0.3px;">🎁 멤버십 혜택</div>
+          <div style="color:white; font-size:0.88rem; font-weight:700; line-height:2; text-align:left;">
+            ☕ <span style="color:#ffcc00;">갑자 라떼 한잔해</span> <span style="color:#aaa; font-size:0.8rem;">2,990원</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;→ 시참권 <span style="color:#ffcc00; font-weight:900;">2장</span> 지급<br>
+            🍲 <span style="color:#ffcc00;">갑자야 국밥한그릇해</span> <span style="color:#aaa; font-size:0.8rem;">7,990원</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;→ 시참권 <span style="color:#ffcc00; font-weight:900;">4장</span> 정기 지급
+          </div>
+        </div>
+        <div class="modal-msg" style="margin-bottom:18px;">유튜브 멤버십 페이지로 이동합니다.<br>멤버십 가입 후 혜택을 누려보세요! 🙏</div>
+        <div style="display:flex; gap:10px;">
+          <button onclick="closeYoutubeModal()" style="flex:1; padding:12px; background:#333; color:#bbb; border:1px solid #444; border-radius:10px; font-size:0.95rem; font-weight:700; cursor:pointer;">돌아가기</button>
+          <button onclick="goToYoutube()" style="flex:1; padding:12px; background:linear-gradient(135deg,#ff0000,#cc0000); color:white; border:none; border-radius:10px; font-size:0.95rem; font-weight:900; cursor:pointer;">가입하기 →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 계좌 복사 모달 -->
+    <div class="modal-overlay" id="bankModal">
+      <div class="modal-box">
+        <div class="modal-icon">🏦</div>
+        <div class="modal-title">계좌 복사 완료!</div>
+        <div class="modal-account">3333-11-6729871</div>
+        <div class="modal-copy-tag">✅ 계좌번호 복사됨</div>
+        <div class="modal-msg">
+          카카오뱅크 3333-11-6729871<br>
+          (예금주: 백**)<br><br>
+          소중한 후원 정말 감사드립니다! 🙏
+        </div>
+        <button class="modal-close-btn" onclick="closeBankModal()">확인</button>
+      </div>
+    </div>
+
+    <!-- 우선예약 확인 모달 -->
+    <div class="confirm-modal-overlay" id="confirmModal">
+      <div class="confirm-box">
+        <p>후원 완료 후<br><span>신청이 가능합니다.</span></p>
+        <div class="confirm-btn-group">
+          <button class="btn-cancel" onclick="closeConfirmModal()">돌아가기</button>
+          <button class="btn-confirm" onclick="executePrioritySubmit()">신청완료</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- ===== 위젯 끝 ===== -->
+
+  <div class="bottom-nav">
+    <button class="back-btn go-page" data-target="page1" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      돌아가기
+    </button>
+  </div>
+
+  <footer>
+    <p class="ribbon">갑자TV 운영팀</p>
+    <p>소중한 후원과 예약, 진심으로 감사드려요.</p>
   </footer>
 
 </div>
@@ -778,23 +1556,206 @@
     }
   }
 
-  const page1 = document.getElementById('page1');
-  const page2 = document.getElementById('page2');
+  const pages = {
+    page1: document.getElementById('page1'),
+    page2: document.getElementById('page2'),
+    page3: document.getElementById('page3'),
+    page4: document.getElementById('page4'),
+  };
 
-  animateItemsIn(page1);
-  animateItemsIn(page2);
+  Object.values(pages).forEach(animateItemsIn);
 
-  document.getElementById('toCmdPage').addEventListener('click', () => {
-    page1.classList.remove('active');
-    page2.classList.add('active');
+  function goPage(targetId){
+    Object.values(pages).forEach(p => p.classList.remove('active'));
+    pages[targetId].classList.add('active');
     window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  }
+
+  document.querySelectorAll('.go-page').forEach(btn => {
+    btn.addEventListener('click', () => goPage(btn.dataset.target));
   });
 
-  document.getElementById('backBtn').addEventListener('click', () => {
-    page2.classList.remove('active');
-    page1.classList.add('active');
-    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  document.querySelectorAll('.scroll-top').forEach(btn => {
+    btn.addEventListener('click', () => {
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
   });
+</script>
+
+<!-- ===== 갑자TV 후원 및 우선예약 위젯 스크립트 ===== -->
+<script>
+  // ── Google Apps Script URL ──
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbyyJuoBA7A-mzqmBHdV52HBYB21K__bWa_MMHPUDI1rMn7bpzO_uAJbAeBS8XPdhGOb/exec";
+  const PRIORITY_COOLDOWN_TIME = 1 * 60 * 1000; // 1분
+
+  // ── 배경 파티클 생성 ──
+  (function createParticles() {
+    const container = document.getElementById('bgParticles');
+    if (!container) return;
+    const count = 18;
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 5 + 2;
+      p.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${Math.random() * 100}%;
+        animation-duration: ${Math.random() * 12 + 8}s;
+        animation-delay: ${Math.random() * 10}s;
+        opacity: 0;
+      `;
+      container.appendChild(p);
+    }
+  })();
+
+  // ── 캐릭터 이미지 터치/클릭 효과 (모바일) ──
+  const charImg = document.getElementById('charImg');
+  charImg.addEventListener('touchstart', () => {
+    charImg.classList.add('touched');
+  }, { passive: true });
+  charImg.addEventListener('touchend', () => {
+    setTimeout(() => charImg.classList.remove('touched'), 300);
+  });
+
+  // ── 쿨다운 체크 ──
+  function checkCooldown() {
+    const lastPrioritySubmit = localStorage.getItem('lastPrioritySubmitTime');
+    if (lastPrioritySubmit) {
+      const elapsed = Date.now() - parseInt(lastPrioritySubmit);
+      if (elapsed < PRIORITY_COOLDOWN_TIME) {
+        const pBtn = document.getElementById('prioritySubmitBtn');
+        pBtn.disabled = true;
+        document.getElementById('priorityCooldownMsg').style.display = 'block';
+        pBtn.innerText = "잠시 후 신청 가능";
+
+        const remaining = PRIORITY_COOLDOWN_TIME - elapsed;
+        setTimeout(() => {
+          pBtn.disabled = false;
+          pBtn.innerText = "🚀 우선예약 신청";
+          document.getElementById('priorityCooldownMsg').style.display = 'none';
+        }, remaining);
+      }
+    }
+  }
+
+  // ── 우선예약 모드 선택 처리 ──
+  function checkPriorityModeSelect() {
+    const sel = document.getElementById('priorityModeSelect');
+    if (sel.value === "채팅(알림)") {
+      window.open('https://gapjatv.github.io/chat/', '_blank');
+      sel.value = "";
+    }
+  }
+
+  // ── 유튜브 멤버십 모달 ──
+  function openYoutubeModal() {
+    document.getElementById('youtubeModal').classList.add('open');
+  }
+  function closeYoutubeModal() {
+    document.getElementById('youtubeModal').classList.remove('open');
+  }
+  function goToYoutube() {
+    window.open('https://www.youtube.com/channel/UCXJFVjOu5LhQSmyYoMfAZHA/join', '_blank');
+    closeYoutubeModal();
+  }
+  document.getElementById('youtubeModal').addEventListener('click', function(e) {
+    if (e.target === this) closeYoutubeModal();
+  });
+
+  // ── 계좌 복사 모달 ──
+  function openBankModal() {
+    const accountNumber = "3333-11-6729871";
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(accountNumber).catch(() => {
+        fallbackCopy(accountNumber);
+      });
+    } else {
+      fallbackCopy(accountNumber);
+    }
+    document.getElementById('bankModal').classList.add('open');
+  }
+
+  function fallbackCopy(text) {
+    const el = document.createElement('textarea');
+    el.value = text;
+    el.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0;';
+    document.body.appendChild(el);
+    el.focus();
+    el.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(el);
+  }
+
+  function closeBankModal() {
+    document.getElementById('bankModal').classList.remove('open');
+  }
+
+  document.getElementById('bankModal').addEventListener('click', function(e) {
+    if (e.target === this) closeBankModal();
+  });
+
+  // ── 우선예약 확인 모달 ──
+  function openConfirmModal() {
+    const name = document.getElementById('priorityNickname').value.trim();
+    const mode = document.getElementById('priorityModeSelect').value;
+    if (!name) { alert("게임 닉네임을 입력해주세요!"); return; }
+    if (!mode) { alert("모드를 선택해주세요!"); return; }
+    document.getElementById('confirmModal').classList.add('open');
+  }
+
+  function closeConfirmModal() {
+    document.getElementById('confirmModal').classList.remove('open');
+  }
+
+  document.getElementById('confirmModal').addEventListener('click', function(e) {
+    if (e.target === this) closeConfirmModal();
+  });
+
+  // ── 우선예약 전송 ──
+  function executePrioritySubmit() {
+    closeConfirmModal();
+
+    const name = document.getElementById('priorityNickname').value.trim();
+    const mode = document.getElementById('priorityModeSelect').value;
+    const btn = document.getElementById('prioritySubmitBtn');
+
+    btn.disabled = true;
+    btn.innerText = "전송 중...";
+
+    const combinedNickname = name + " [우선예약-" + mode + "]";
+
+    fetch(GAS_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nickname: combinedNickname })
+    })
+    .then(() => {
+      localStorage.setItem('lastPrioritySubmitTime', Date.now());
+      document.getElementById('prioritySection').style.display = 'none';
+      document.getElementById('prioritySuccessSection').style.display = 'block';
+    })
+    .catch(() => {
+      alert("오류 발생! 다시 시도해주세요.");
+      btn.disabled = false;
+      btn.innerText = "🚀 우선예약 신청";
+    });
+  }
+
+  // ── 위젯 초기 상태로 리셋 (페이지 전체를 새로고침하지 않고 위젯만 초기화) ──
+  function resetPriorityWidget() {
+    document.getElementById('prioritySuccessSection').style.display = 'none';
+    document.getElementById('prioritySection').style.display = 'block';
+    document.getElementById('priorityNickname').value = '';
+    document.getElementById('priorityModeSelect').value = '';
+    const pBtn = document.getElementById('prioritySubmitBtn');
+    pBtn.disabled = false;
+    pBtn.innerText = "🚀 우선예약 신청";
+  }
+
+  // ── 초기화 ──
+  checkCooldown();
 </script>
 </body>
 </html>
